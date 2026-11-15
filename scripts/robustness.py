@@ -16,7 +16,7 @@ python scripts/robustness.py
 """
 import json, math, os, sys
 import numpy as np
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from measure_twice import calibration as V
 from measure_twice.calibration import NUM, mra, finite, table, conformal, selective

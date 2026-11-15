@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from PIL import Image
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from measure_twice.calibration import table, mra, choice, NUM, conformal
 
@@ -27,6 +27,8 @@ plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "
                      "axes.linewidth": 0.6, "pdf.fonttype": 42})
 J = lambda f: json.load(open(os.path.join(ROOT, "results", f)))
 ANS = J("vsi_answers.json")
+if not os.path.exists(os.path.join(ROOT, "results", "analysis", "two_models.json")):
+    sys.exit("run `python scripts/reproduce_paper.py` first (it writes results/analysis/two_models.json)")
 # 32 sampled frames of scannet/scene0356_00 (written by measure_twice.scene_memory); not redistributed
 FRAMES = os.environ.get("MT_TEASER_FRAMES", os.path.join(ROOT, "outputs", "frames", "scannet__scene0356_00"))
 
@@ -95,7 +97,7 @@ def teaser():
 
 
 def signals():
-    A = J("analysis_2fam.json")
+    A = J(os.path.join("analysis", "two_models.json"))
     tasks = [("object_abs_distance", "Abs. distance"), ("object_size_estimation", "Object size"),
              ("room_size_estimation", "Room area"), ("object_counting", "Counting")]
     rho = lambda t, s: A[t]["signals"][s]["sel"]["spearman"]
@@ -168,7 +170,7 @@ def evidence():
     from measure_twice.mllm_compare import load_mllm, mllm_conf, score as mscore
     rng = np.random.default_rng(0)
     fig, axes = plt.subplots(1, 3, figsize=(6.75, 2.05), gridspec_kw=dict(width_ratios=[1.25, 1, 1]))
-    A = J("analysis_2fam.json")
+    A = J(os.path.join("analysis", "two_models.json"))
     tasks = [("object_abs_distance", "Distance"), ("object_size_estimation", "Size"), ("room_size_estimation", "Room"), ("object_counting", "Count")]
     rho = lambda t, s: A[t]["signals"][s]["sel"]["spearman"]
     series = [("detector score", DET, [rho(t, "detector") if "detector" in A[t]["signals"] else np.nan for t, _ in tasks]),
