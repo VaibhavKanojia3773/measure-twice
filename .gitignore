@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+# runtime outputs of the GPU stages and regenerated analyses
+work/
+outputs/
+results/analysis/
+figures/

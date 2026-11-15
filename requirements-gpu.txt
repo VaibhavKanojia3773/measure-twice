@@ -1,0 +1,13 @@
+# GPU pipeline: grounding, metric reconstruction and the MLLM baselines (tested on 2x NVIDIA T4, CUDA 12)
+-r requirements.txt
+torch>=2.3
+transformers>=4.57
+accelerate>=0.30
+huggingface_hub>=0.24
+safetensors
+einops
+opencv-python-headless>=4.8
+qwen-vl-utils
+# optional: 4-bit MLLM weights on a single GPU (--quant 4bit)
+# bitsandbytes>=0.43
+# MapAnything, pi3-X and Depth Anything 3 are cloned and installed on first use (measure_twice/backbones.py)

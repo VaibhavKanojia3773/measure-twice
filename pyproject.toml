@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "measure-twice"
+version = "1.0.0"
+description = "Calibrated error bars for metric spatial questions from video (NeurIPS 2026 Workshop on Physical World AI)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Vaibhav Kanojia" }]
+keywords = ["spatial reasoning", "uncertainty quantification", "conformal prediction", "metric 3D reconstruction", "video understanding"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["numpy>=1.24", "scipy>=1.10", "matplotlib>=3.7", "pillow>=9"]
+
+[project.optional-dependencies]
+gpu = [
+  "torch>=2.3", "transformers>=4.57", "accelerate>=0.30", "huggingface_hub>=0.24", "safetensors",
+  "opencv-python-headless>=4.8", "qwen-vl-utils", "einops",
+]
+quant = ["bitsandbytes>=0.43"]
+
+[project.urls]
+Paper = "https://openreview.net/group?id=NeurIPS.cc/2026/Workshop/PhysWorldAI_Poster"
+
+[tool.setuptools.packages.find]
+include = ["measure_twice*"]
+
+[tool.setuptools.package-data]
+measure_twice = ["data/*.json", "data/*.txt"]
