@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 400" width="1240" height="400" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Measure Twice pipeline</title>
+  <desc>Video frames are grounded, reconstructed by several metric models on all frames and on random halves, measured by a geometric program in every run, and the spread of the runs is calibrated on held-out scenes into an interval that decides whether to answer.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1240" height="400" rx="18" fill="#ffffff"/>
+
+  <!-- step headers -->
+  <g font-size="13" font-weight="700" fill="#2a78d6" letter-spacing="1">
+    <text x="30" y="44">1 · SAMPLE</text>
+    <text x="222" y="44">2 · GROUND</text>
+    <text x="414" y="44">3 · RECONSTRUCT ×R</text>
+    <text x="644" y="44">4 · MEASURE</text>
+    <text x="846" y="44">5 · CALIBRATE</text>
+    <text x="1050" y="44">6 · DECIDE</text>
+  </g>
+
+  <!-- boxes -->
+  <g fill="#f6f8fb" stroke="#d9dee6" stroke-width="1.2">
+    <rect x="20" y="58" width="168" height="300" rx="12"/>
+    <rect x="212" y="58" width="168" height="300" rx="12"/>
+    <rect x="404" y="58" width="208" height="300" rx="12"/>
+    <rect x="636" y="58" width="186" height="300" rx="12"/>
+    <rect x="846" y="58" width="180" height="300" rx="12"/>
+    <rect x="1050" y="58" width="170" height="300" rx="12"/>
+  </g>
+
+  <!-- 1 sample: stacked frames -->
+  <g>
+    <rect x="62" y="100" width="92" height="64" rx="5" fill="#c9d3e3"/>
+    <rect x="52" y="110" width="92" height="64" rx="5" fill="#aebdd4"/>
+    <rect x="42" y="120" width="92" height="64" rx="5" fill="#7f97bd"/>
+    <path d="M52 172 L74 148 L92 164 L108 150 L126 172 z" fill="#5a76a6"/>
+    <circle cx="112" cy="136" r="7" fill="#e9eef6"/>
+  </g>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="104" y="222" font-weight="600">indoor video</text>
+    <text x="104" y="244" fill="#57606a">32 uniformly</text>
+    <text x="104" y="262" fill="#57606a">sampled frames</text>
+  </g>
+  <text x="104" y="318" font-size="12.5" fill="#57606a" text-anchor="middle" font-style="italic">"distance between</text>
+  <text x="104" y="336" font-size="12.5" fill="#57606a" text-anchor="middle" font-style="italic">the sofa and the table?"</text>
+
+  <!-- 2 ground: frame with boxes -->
+  <g>
+    <rect x="238" y="96" width="116" height="84" rx="6" fill="#e8edf5"/>
+    <rect x="248" y="122" width="44" height="44" fill="none" stroke="#2a78d6" stroke-width="2.4"/>
+    <rect x="304" y="108" width="40" height="58" fill="none" stroke="#eb6834" stroke-width="2.4"/>
+    <rect x="248" y="113" width="34" height="11" fill="#2a78d6"/><text x="251" y="122" font-size="9" fill="#fff">sofa</text>
+    <rect x="304" y="99" width="34" height="11" fill="#eb6834"/><text x="307" y="108" font-size="9" fill="#fff">table</text>
+  </g>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="296" y="222" font-weight="600">Grounding DINO</text>
+    <text x="296" y="242" font-weight="600">+ SAM</text>
+    <text x="296" y="266" fill="#57606a">masks of the</text>
+    <text x="296" y="284" fill="#57606a">queried objects</text>
+  </g>
+
+  <!-- 3 reconstruct: 3x3 grid of runs -->
+  <g font-size="11.5" fill="#57606a" text-anchor="middle">
+    <text x="484" y="88">all 32</text><text x="534" y="88">half A</text><text x="584" y="88">half B</text>
+  </g>
+  <g font-size="12" fill="#1f2328" text-anchor="end">
+    <text x="456" y="120">MapAny.</text><text x="456" y="168">π³-X</text><text x="456" y="216">DA3</text>
+  </g>
+  <g>
+    <rect x="462" y="98" width="44" height="36" rx="6" fill="#2a78d6"/><rect x="512" y="98" width="44" height="36" rx="6" fill="#5c99e0"/><rect x="562" y="98" width="44" height="36" rx="6" fill="#5c99e0"/>
+    <rect x="462" y="146" width="44" height="36" rx="6" fill="#1baf7a"/><rect x="512" y="146" width="44" height="36" rx="6" fill="#55c79d"/><rect x="562" y="146" width="44" height="36" rx="6" fill="#55c79d"/>
+    <rect x="462" y="194" width="44" height="36" rx="6" fill="#8a63d2"/><rect x="512" y="194" width="44" height="36" rx="6" fill="#a98ae0"/><rect x="562" y="194" width="44" height="36" rx="6" fill="#a98ae0"/>
+  </g>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="508" y="266" font-weight="600">metric 3D in metres</text>
+    <text x="508" y="288" fill="#57606a">each run in its own frame,</text>
+    <text x="508" y="306" fill="#57606a">never registered</text>
+  </g>
+
+  <!-- 4 measure: program + runs on a log axis -->
+  <g font-size="13" fill="#1f2328">
+    <text x="652" y="92" font-weight="600">geometric program</text>
+    <text x="652" y="114" fill="#57606a">distance · size · area</text>
+    <text x="652" y="132" fill="#57606a">direction · counting</text>
+  </g>
+  <line x1="652" y1="206" x2="806" y2="206" stroke="#8a8f98" stroke-width="1.4"/>
+  <g>
+    <circle cx="700" cy="190" r="5.5" fill="#2a78d6"/><circle cx="712" cy="190" r="5.5" fill="#5c99e0"/><circle cx="726" cy="190" r="5.5" fill="#5c99e0"/>
+    <circle cx="706" cy="176" r="5.5" fill="#1baf7a"/><circle cx="720" cy="176" r="5.5" fill="#55c79d"/><circle cx="738" cy="176" r="5.5" fill="#55c79d"/>
+    <circle cx="694" cy="162" r="5.5" fill="#8a63d2"/><circle cx="716" cy="162" r="5.5" fill="#a98ae0"/><circle cx="752" cy="162" r="5.5" fill="#a98ae0"/>
+  </g>
+  <text x="729" y="226" font-size="11.5" fill="#57606a" text-anchor="middle">log scale</text>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="729" y="266" font-weight="600">one answer per run</text>
+    <text x="729" y="288" fill="#57606a">ŷ = median</text>
+    <text x="729" y="306" fill="#57606a">σ = std of log y</text>
+  </g>
+
+  <!-- 5 calibrate: scene split bar -->
+  <g font-size="12" fill="#ffffff" text-anchor="middle" font-weight="600">
+    <rect x="862" y="96" width="30" height="30" rx="4" fill="#8a8f98"/><text x="877" y="115">dev</text>
+    <rect x="896" y="96" width="58" height="30" rx="4" fill="#2a78d6"/><text x="925" y="115">calib.</text>
+    <rect x="958" y="96" width="54" height="30" rx="4" fill="#57606a"/><text x="985" y="115">test</text>
+  </g>
+  <text x="936" y="146" font-size="11.5" fill="#57606a" text-anchor="middle">split by scene, 100 times</text>
+  <text x="936" y="186" font-size="15" fill="#1f2328" text-anchor="middle">s = |log y* − log ŷ|</text>
+  <line x1="884" y1="194" x2="988" y2="194" stroke="#1f2328" stroke-width="1.2"/>
+  <text x="936" y="212" font-size="15" fill="#1f2328" text-anchor="middle">σ + σ₀</text>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="936" y="266" font-weight="600">exact conformal q̂</text>
+    <text x="936" y="288" fill="#57606a">one question per</text>
+    <text x="936" y="306" fill="#57606a">calibration scene</text>
+  </g>
+
+  <!-- 6 decide -->
+  <g font-size="12.5">
+    <rect x="1064" y="88" width="142" height="40" rx="8" fill="#e6f0fb" stroke="#2a78d6"/>
+    <text x="1135" y="105" text-anchor="middle" fill="#1f2328" font-weight="600">narrow interval</text>
+    <text x="1135" y="121" text-anchor="middle" fill="#2a78d6">answer with [ℓ, u]</text>
+    <rect x="1064" y="140" width="142" height="40" rx="8" fill="#eaf7f1" stroke="#1baf7a"/>
+    <text x="1135" y="157" text-anchor="middle" fill="#1f2328" font-weight="600">excludes τ</text>
+    <text x="1135" y="173" text-anchor="middle" fill="#13865d">decide "is d &gt; τ?"</text>
+    <rect x="1064" y="192" width="142" height="40" rx="8" fill="#f3f4f6" stroke="#8a8f98"/>
+    <text x="1135" y="209" text-anchor="middle" fill="#1f2328" font-weight="600">wide interval</text>
+    <text x="1135" y="225" text-anchor="middle" fill="#57606a">withhold</text>
+  </g>
+  <g font-size="14" fill="#1f2328" text-anchor="middle">
+    <text x="1135" y="266" font-weight="600">≥ 1 − α coverage</text>
+    <text x="1135" y="288" fill="#57606a">on unseen scenes</text>
+    <text x="1135" y="306" fill="#57606a">(marginal)</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#8a8f98" stroke-width="2" fill="none" marker-end="url(#ar)">
+    <line x1="190" y1="208" x2="208" y2="208"/>
+    <line x1="382" y1="208" x2="400" y2="208"/>
+    <line x1="614" y1="208" x2="632" y2="208"/>
+    <line x1="824" y1="208" x2="842" y2="208"/>
+    <line x1="1028" y1="208" x2="1046" y2="208"/>
+  </g>
+  <text x="620" y="384" font-size="12.5" fill="#57606a" text-anchor="middle">Nothing is trained. The uncertainty is how much the measurement moves when its visual evidence changes.</text>
+</svg>

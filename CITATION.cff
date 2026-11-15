@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code or the released measurements, please cite the paper."
+title: "Measure Twice: Calibrated Error Bars for Metric Spatial Questions from Video"
+authors:
+  - family-names: Kanojia
+    given-names: Vaibhav
+    affiliation: "Delhi Technological University"
+type: software
+license: MIT
+version: 1.0.0
+date-released: 2026-11-21
+keywords:
+  - spatial reasoning
+  - uncertainty quantification
+  - conformal prediction
+  - metric 3D reconstruction
+  - video understanding
+preferred-citation:
+  type: conference-paper
+  title: "Measure Twice: Calibrated Error Bars for Metric Spatial Questions from Video"
+  authors:
+    - family-names: Kanojia
+      given-names: Vaibhav
+  collection-title: "NeurIPS 2026 Workshop on Physical World AI: Geometry, Characteristics, and Multimodal Sensing"
+  year: 2026
