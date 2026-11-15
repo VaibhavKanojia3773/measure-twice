@@ -31,7 +31,8 @@ def main():
         return
     # Tables 1 and 2: uncertainty signals with two reconstructors, and the three-reconstruction signal ablation
     run([PY, "-m", "measure_twice.calibration", "--answers", ans, "--families", "mapanything,pi3x", "--out", os.path.join(OUT, "two_models.json")])
-    run([PY, "-m", "measure_twice.calibration", "--answers", ans, "--families", "mapanything,pi3x,da3m", "--out", os.path.join(OUT, "three_models.json")])
+    run([PY, "-m", "measure_twice.calibration", "--answers", ans, "--families", "mapanything,pi3x,da3m",
+         "--tasks", "object_abs_distance,object_size_estimation,room_size_estimation", "--out", os.path.join(OUT, "three_models.json")])
     # Table 3: spatial MLLMs next to the measurements (16 frames, and 32 frames for Qwen3-VL when available)
     for name, d in (("qwen3vl8b_16f", "qwen3vl8b_16f"), ("vst7b_16f", "vst7b_16f"), ("qwen3vl8b_32f", "qwen3vl8b_32f")):
         files = sorted(glob.glob(os.path.join(RES, "mllm", d, "*.jsonl")))
