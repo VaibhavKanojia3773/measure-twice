@@ -35,6 +35,8 @@ JSONL, one line per question:
 | folder | model | frames |
 |---|---|---|
 | `qwen3vl8b_16f/` | Qwen3-VL-8B-Instruct, fp16 | 16 |
-| `qwen3vl8b_32f/` | Qwen3-VL-8B-Instruct, fp16, the same 32 frames as the measurements | 32 |
 | `vst7b_16f/` | VST-7B-RL, fp16 | 16 |
 | `*_degraded/` | the same models on the degraded videos | 16 |
+
+`part1.jsonl` is the half of the benchmark evaluated in the paper's Table 3 (2,007 questions with a measured answer);
+`part2.jsonl` completes the benchmark. The measurements themselves use 32 frames.

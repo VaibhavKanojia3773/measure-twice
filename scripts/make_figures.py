@@ -197,7 +197,7 @@ def evidence():
     ax.legend(fontsize=5.6, frameon=False, loc="lower left", handlelength=1.4)
     # (c) relative direction: MLLM probability vs measured vote, same questions
     ax = axes[2]
-    M = load_mllm(sorted(_g.glob(os.path.join(ROOT, "results", "mllm", "qwen3vl8b_16f", "*.jsonl"))))
+    M = load_mllm(sorted(_g.glob(os.path.join(ROOT, "results", "mllm", "qwen3vl8b_16f", "part1.jsonl"))))
     gs, gc, qs, qc = [], [], [], []
     for r in ANS:
         if r["type"].startswith("object_rel_direction") and r["id"] in M:

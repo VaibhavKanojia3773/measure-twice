@@ -46,7 +46,7 @@ never seen. **Nothing is trained.**
 | **Tighter calibrated intervals** | At ≈ 90 % coverage on unseen scenes the median distance interval is **2.7 m**, against **6.3 m** without uncertainty. |
 | **Views, not models** | Re-running *one* model on other frames ranks errors better than consulting *other* models (ρ 0.43–0.46 vs 0.38 at three reconstructions each). |
 | **Safer decisions** | "Is the gap wider than τ?" is settled for **35.7 %** of question–threshold pairs with **5.9 %** error, against **10.6 %** for an equally selective control and **15.8 %** for always answering. |
-| **Two kinds of confidence** | Qwen3-VL's confidence cannot rank its distance errors (ranking gain −1.6) while the measured spread can (14.6); for counting the roles flip. |
+| **Two kinds of confidence** | Qwen3-VL's confidence cannot rank its distance errors (ranking gain −0.4) while the measured spread can (15.3); for counting the roles flip. |
 | **Honest limits** | Shared errors that every view sees (missed instances, unseen room parts, video compression) are invisible to resampling. |
 
 ## Results
