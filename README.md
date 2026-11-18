@@ -46,7 +46,7 @@ never seen. **Nothing is trained.**
 | **Tighter calibrated intervals** | At ≈ 90 % coverage on unseen scenes the median distance interval is **2.7 m**, against **6.3 m** without uncertainty. |
 | **Views, not models** | Re-running *one* model on other frames ranks errors better than consulting *other* models (ρ 0.43–0.46 vs 0.38 at three reconstructions each). |
 | **Safer decisions** | "Is the gap wider than τ?" is settled for **35.7 %** of question–threshold pairs with **5.9 %** error, against **10.6 %** for an equally selective control and **15.8 %** for always answering. |
-| **Two kinds of confidence** | Qwen3-VL's confidence cannot rank its distance errors (ranking gain −0.4) while the measured spread can (15.3); for counting the roles flip. |
+| **Two kinds of confidence** | On the whole benchmark, Qwen3-VL's confidence cannot rank its distance errors (ranking gain −1.6) while the measured spread can (14.6); for counting the roles flip. |
 | **Honest limits** | Shared errors that every view sees (missed instances, unseen room parts, video compression) are invisible to resampling. |
 
 ## Results
@@ -68,12 +68,13 @@ calibrated to ≈ 90 % coverage around the *same* median answer; 100 scene-level
 
 **Robustness, added for the camera-ready version** (all reproducible with `scripts/robustness.py`):
 
-* **Beyond the complete-output subset.** On all 625 answered distance questions with ≥ 2 runs, coverage is 89.8 % with
-  a 3.3 m median width (6.3 m without uncertainty).
-* **How wide is wide?** The median distance interval extends by a factor of ≈ 2.1 on either side of the answer
-  (4.8 without uncertainty); on the most certain half it is 2.1 m.
+* **Beyond the complete-output subset.** Recalibrated on all 625 answered distance questions with ≥ 2 runs, coverage is
+  89.8 % with a 3.3 m median width (6.3 m without uncertainty); the upper tail is wider (90th percentile 27.2 vs 14.3 m).
+* **How wide is wide?** On Table 1's splits the median distance interval spans roughly a factor of 2.0 on either side of
+  the answer (4.1 without uncertainty), and 2.0 m on the most certain half. Adaptive intervals are wider than the
+  constant ones for the least certain questions (90th percentile 17.3 vs 14.3 m), which selective answering withholds.
 * **Own-answer ablation.** When each three-run signal also answers with the median of its own three runs, within-model
-  resampling still ranks distance errors better (ρ 0.44–0.47 vs 0.37) with intervals of 2.4–4.2 m vs 7.6 m.
+  resampling still ranks distance errors better (ρ 0.44–0.47 vs 0.37).
 
 See the paper for object size, room area, counting, cross-dataset transfer, physical degradations and the full MLLM
 comparison.

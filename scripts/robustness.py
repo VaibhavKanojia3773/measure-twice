@@ -41,18 +41,14 @@ def any_table(rows, t, fams, min_runs=2):
 
 def width_factors(T, t, sig, alpha=0.10, seed=0, point="point"):
     """Replicates the split loop of vsi_core.conformal and records multiplicative half-width factors."""
+    # Use EXACTLY the splits of the main analysis: vsi_core.conformal with the same thresholds consumes the same random
+    # draws (the decision control's tie breaking shares the generator), so its kept splits are Table 1's splits.
     eps = NUM[t]; g = lambda x: np.log(np.asarray(x, float) + eps)
-    scenes = sorted({r["scene"] for r in T}); by = {s: [r for r in T if r["scene"] == s] for s in scenes}
-    rng = np.random.default_rng(seed); Fm, W10, W50, W90, Whalf, Fhalf = [], [], [], [], [], []
-    for _ in range(V.SPLITS):
-        p = rng.permutation(len(scenes)); n = len(scenes)
-        dev, cal, te = [scenes[i] for i in p[: n // 5]], [scenes[i] for i in p[n // 5: 3 * n // 5]], [scenes[i] for i in p[3 * n // 5:]]
-        SG = V.sigma_map(T, sig, set(dev)); s0 = float(np.median([SG[r["id"]] for s in dev for r in by[s]])) or 1e-3
-        C = [by[s][rng.integers(len(by[s]))] for s in cal]
-        sc = np.sort([abs(g(r["gt"]) - g(r[point])) / (SG[r["id"]] + s0) for r in C]); k = math.ceil((len(sc) + 1) * (1 - alpha))
-        if k > len(sc):
-            continue
-        q = sc[k - 1]; R = [r for s in te for r in by[s]]
+    keep = []; conformal(T, t, sig, alpha=alpha, seed=seed, point=point,
+                         thresholds=(1.0, 2.0, 3.0) if t == "object_abs_distance" else (), keep=keep)
+    Fm, W10, W50, W90, Whalf, Fhalf = [], [], [], [], [], []
+    for k in keep:
+        q, s0, SG = k["q"], k["s0"], k["sigma"]; R = [r for r in T if r["scene"] in k["test"]]
         u = np.array([SG[r["id"]] for r in R]); f = np.exp(q * (u + s0))
         lo = np.maximum(np.exp(g(np.array([r[point] for r in R])) - np.log(f)) - eps, 0)
         hi = np.exp(g(np.array([r[point] for r in R])) + np.log(f)) - eps; w = hi - lo
@@ -89,7 +85,8 @@ for t in TASKS:
                           median_gt=float(np.median([r["gt"] for r in S])) if S else None,
                           ds={d: sum(r["ds"] == d for r in S) for d in ("arkitscenes", "scannet", "scannetpp")})
     o["population"] = dict(n_all=len(R), complete=comp([dict(r) for r in Tc]), incomplete_answered=comp(inc),
-                           any2=comp(Ta), n_pred=sum(bool(sum((finite(r, f) for f in F2), [])) for r in R))
+                           any2=comp(Ta), n_pred=sum(bool(sum((finite(r, f) for f in F2), [])) for r in R),
+                           n_one=sum(len(sum((finite(r, f) for f in F2), [])) == 1 for r in R))
     o["any2"] = {s: dict(conf=conformal(Ta, t, s), sel=selective(Ta, t, s)) for s in ("const", "comb")}
     Tm = table(R, t, ["mapanything"])
     o["ma_only"] = dict(n=len(Tm), n_scenes=len({r["scene"] for r in Tm}),
