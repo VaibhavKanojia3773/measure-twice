@@ -71,8 +71,9 @@ calibrated to ≈ 90 % coverage around the *same* median answer; 100 scene-level
 * **Beyond the complete-output subset.** Recalibrated on all 625 answered distance questions with ≥ 2 runs, coverage is
   89.8 % with a 3.3 m median width (6.3 m without uncertainty); the upper tail is wider (90th percentile 27.2 vs 14.3 m).
 * **How wide is wide?** On Table 1's splits the median distance interval spans roughly a factor of 2.0 on either side of
-  the answer (4.1 without uncertainty), and 2.0 m on the most certain half. Adaptive intervals are wider than the
-  constant ones for the least certain questions (90th percentile 17.3 vs 14.3 m), which selective answering withholds.
+  the answer (4.1 without uncertainty), and 2.0 m on the most certain half. The upper tail is wider than with a
+  constant width (90th percentile 17.3 vs 14.3 m); selective answering separately withholds the questions with the
+  largest spread.
 * **Own-answer ablation.** When each three-run signal also answers with the median of its own three runs, within-model
   resampling still ranks distance errors better (ρ 0.44–0.47 vs 0.37).
 

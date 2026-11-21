@@ -38,5 +38,7 @@ JSONL, one line per question:
 | `vst7b_16f/` | VST-7B-RL, fp16 | 16 |
 | `*_degraded/` | the same models on the degraded videos | 16 |
 
-`part1.jsonl` and `part2.jsonl` together cover the whole benchmark (Table 3). The measurements themselves use 32 frames;
+The `part*.jsonl` files of each model together cover the whole benchmark (Table 3), the same 4,936 questions for both
+models. For VST-7B-RL, `part3.jsonl` holds 13 ScanNet++ scenes that the second run did not reach before its time
+limit, answered later with identical settings. The measurements themselves use 32 frames;
 Qwen3-VL-8B in fp16 with 32 frames at the same resolution does not fit in two 16 GB GPUs, so the budgets are not matched.
